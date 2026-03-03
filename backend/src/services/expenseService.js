@@ -2,7 +2,7 @@
  * 비용 서비스 - 비즈니스 로직
  */
 const { Expense, Building } = require('../models');
-const { fn, col } = require('sequelize');
+const { fn, col, Op } = require('sequelize');
 
 const getAll = async ({ page = 1, limit = 20, buildingId, category, year, month }) => {
   const where = {};
