@@ -1,0 +1,10 @@
+node_modules/
+.env
+build/
+dist/
+uploads/
+*.log
+.DS_Store
+backend/downloads/temp/
+coverage/
+.nyc_output/
