@@ -5,6 +5,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
 const path = require('path');
 
 const app = express();
@@ -17,6 +18,16 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+
+// API 전역 요청 제한 (분당 200회)
+const apiLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 200,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: '너무 많은 요청이 발생했습니다. 잠시 후 다시 시도해주세요.' },
+});
+app.use('/api/', apiLimiter);
 
 // 정적 파일 제공 (업로드 파일)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
